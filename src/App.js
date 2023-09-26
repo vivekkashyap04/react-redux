@@ -1,27 +1,28 @@
 import { connect } from "react-redux";
-import { increment,decrement,reset } from "./stores/action";
+import { addTodo, deleteTodo, toggleTodo } from './stores/action';
+import TodoList from './TodoList';
+import AddTodoForm from './AddTodoForm';
+
 function App(props) {
-  
+  const { todos, addTodo, deleteTodo, toggleTodo } = props;
   
   return (
     <div className="App">
-      <h1>{props.count}</h1>
-      <button onClick={props.increment}>Increment</button>
-      <button onClick={props.decrement}>decrement</button>
-      <button onClick={props.reset}>Reset</button>
+       <AddTodoForm addTodo={addTodo} />
+      <TodoList todos={todos} deleteTodo={deleteTodo} toggleTodo={toggleTodo} />
     </div>
   );
 }
 
-function getState(state){
-  return {
-    count : state.value
-  }
-}
+const mapStateToProps = (state) => ({
+  todos: state.todos,
+});
 
 const mapDispatchToProps = {
-  increment,decrement,reset
+  addTodo,
+  deleteTodo,
+  toggleTodo,
 };
 
 
-export default connect(getState,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
